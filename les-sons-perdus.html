@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8" />
+  <title>Les Sons Perdus</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../assets-les-sons-perdus/map_style_les_sons_perdus.css">
+  <!-- Google fonts-->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+  <link rel="shortcut icon" href="../assets-les-sons-perdus/favicon.ico" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
+  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css" type="text/css" />
+  
+</head>
+
+
+<body>
+    
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <div class="sidebar-content">
+        <img src="../assets-les-sons-perdus/les-sons-perdus.png" alt="les sons perdus"> 
+        <br><br><br>
+        <img src="../assets-les-sons-perdus/legenda.png" alt="legenda">
+    </div>
+</div>
+
+
+<img src="../assets-les-sons-perdus/menu.png" class="openbtn" onclick="openNav()"> 
+
+
+<div id="map"></div>
+  
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYWxnYyIsImEiOiJja2NjbTAyczkwNXA3Mnlscm5nbjN5OHZiIn0.yNcJkPBSugRlIeGkXDRlZw'; //Mapbox token 
+      
+    var geojson = {
+        'type': 'FeatureCollection',
+        'features': [
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-2.0032, 47.691]
+            },
+            'properties': {
+                'Place': 'Enfant Juju et Chien Réné',
+                'Title': 'chien',
+                'Audio': '1'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-2.0025, 47.69355]
+            },
+            'properties': {
+                'Place': 'Escargot Turbo',
+                'Title': 'escargot',
+                'Audio': '2'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-2.0017, 47.69425]
+            },
+            'properties': {
+                'Place': 'Pierre Pierrette',
+                'Title': 'pierre',
+                'Audio': '3'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-2.0015, 47.69475]
+            },
+            'properties': {
+                'Place': 'Tondeuse Michelle',
+                'Title': 'tondeuse',
+                'Audio': '4'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-1.9958, 47.6939]
+            },
+            'properties': {
+                'Place': 'Lapin Pompon',
+                'Title': 'lapin',
+                'Audio': '5'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-1.9902, 47.6926]
+            },
+            'properties': {
+                'Place': 'Oies Plume et Josephine',
+                'Title': 'oies',
+                'Audio': '6'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-1.9932, 47.6918]
+            },
+            'properties': {
+                'Place': 'Pic Epeiche Martin Piqueur',
+                'Title': 'pic',
+                'Audio': '7'
+            }
+        },
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [-2.001, 47.6911]
+            },
+            'properties': {
+                'Place': 'Ane Jupiter',
+                'Title': 'ane',
+                'Audio': '8'
+            }
+        }
+        ]
+    };
+    const bounds = [
+        [-2.0056,47.688916],// Southwest coordinates - sudoeste
+        [-1.9867,47.698097] // Northeast coordinates - nordeste
+    ];
+
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/saralgc/clhavw5vy00w601qtdlba0e63',
+      //center: [-1.9965,47.68], // starting position
+      center: [-2.0025, 47.69355],
+      zoom: 15.25,// starting zoom
+      minZoom: 7.7,
+      maxZoom: 17,  
+     // pitch: 0 // pitc3 in degrees
+     // bearing: 45, // bearing in degrees
+     // transformRequest: transformRequest,
+      maxBounds: bounds // Set the map's geographical boundaries.
+    });
+      
+    
+      // add markers to map
+    geojson.features.forEach(function (marker) {
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // make a marker for each feature and add it to the map
+        new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(
+            new mapboxgl.Popup({ offset: 25 }) // add popups
+            /*.setHTML(
+                '<audio controls style="width:100%;" controlsList="nodownload" autoplay><source src="../assets-les-sons-perdus/sounds/' +
+                marker.properties.Audio + 
+                `.mp3" type="audio/mpeg"></audio>` + 
+                `<h2>` + 
+                marker.properties.Place + `</h2>`
+            )*/
+            .setHTML(
+                '<audio controls style="width:100%;" controlsList="nodownload" autoplay><source src="../assets-les-sons-perdus/sounds/' +
+                marker.properties.Audio + 
+                `.mp3" type="audio/mpeg"></audio>` + 
+                `<img src="../assets-les-sons-perdus/` + 
+                marker.properties.Title + `.png" class="legenda">`
+            )
+        )
+        .addTo(map);
+    });
+      
+    
+    map.on('load', () => {
+            map.addSource('radar', {
+                'type': 'image',
+                'url': '/assets-les-sons-perdus/carte_site.png',
+                'coordinates': [
+                    /*
+                    [-45.20, -17.8], noroeste
+                    [-44.20, -17.8], nordeste
+                    [-44.20, -19.3], sudeste
+                    [-45.20, -19.3]  sudoeste  */
+
+                    [-2.0123, 47.698097], 
+                    [-1.9867, 47.698097],
+                    [-1.9867, 47.688916],
+                    [-2.0123, 47.688916]
+
+                    /*
+                   -2.01225, 47.698097,   noroeste
+                   -2.01225, 47.688916,   sudoeste
+                   -1.985984, 47.698097,  nordeste
+                   -1.985984, 47.688916,  sudeste  */
+                  
+                ]
+                })
+                map.addLayer({
+                    id: 'radar-layer',
+                    'type': 'raster',
+                    'source': 'radar',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+            });
+            
+            
+        }); 
+      
+    
+
+      // ZOOM
+     // map.addControl(new mapboxgl.NavigationControl(), 'top-left'); // disable map zoom when using scroll
+    //  map.scrollZoom.disable(); 
+      
+    // Add geolocate control to the map.
+      
+        map.addControl(
+            new mapboxgl.GeolocateControl({
+            positionOptions: {
+            enableHighAccuracy: true
+            },
+            trackUserLocation: true
+            })
+        );
+  </script>
+
+  
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+}
+  
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+    
+<content>
+    <img src="../assets-les-sons-perdus/les-sons-perdus.png" alt="les sons perdus"> 
+    <br>
+    <img src="../assets-les-sons-perdus/legenda.png" alt="legenda">
+</content>
+          
+</body>
+
+</html>

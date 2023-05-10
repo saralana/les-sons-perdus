@@ -55,8 +55,8 @@
                 'coordinates': [-2.0032, 47.691]
             },
             'properties': {
-                'Place': 'Enfant Juju et Chien Réné',
-                'Title': 'chien',
+                'Place': 'La Chatte Pipelette',
+                'Title': 'chatte',
                 'Audio': '1'
             }
         },
@@ -177,46 +177,126 @@
         .setLngLat(marker.geometry.coordinates)
         .setPopup(
             new mapboxgl.Popup({ offset: 25 }) // add popups
-            /*.setHTML(
-                '<audio controls style="width:100%;" controlsList="nodownload" autoplay><source src="../lessonsperdus-assets/sounds/' +
-                marker.properties.Audio + 
-                `.mp3" type="audio/mpeg"></audio>` + 
-                `<h2>` + 
-                marker.properties.Place + `</h2>`
-            )*/
             .setHTML(
                 '<audio controls style="width:100%;" controlsList="nodownload" autoplay><source src="../lessonsperdus-assets/sounds/' +
                 marker.properties.Audio + 
-                `.mp3" type="audio/mpeg"></audio>` + 
-                `<img src="../lessonsperdus-assets/` + 
-                marker.properties.Title + `.png" class="legenda">`
+                '.mp3" type="audio/mp3"></audio>' + 
+                '<img src="../lessonsperdus-assets/' + 
+                marker.properties.Title + '.png" class="legenda">'
             )
         )
-        .addTo(map);
+        .addTo(map)
     });
       
     
     map.on('load', () => {
+
+        map.addSource('radar1a', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site1a.png',
+                'coordinates': [
+
+                    [-2.0059, 47.698097], 
+                    [-1.9995, 47.698097],
+                    [-1.9995, 47.693506],
+                    [-2.0059, 47.693506]
+
+                    
+                   //-2.01225, 47.698097,   noroeste
+                   //-1.985984, 47.698097,  nordeste
+                   //-1.985984, 47.688916,  sudeste 
+                   //-2.01225, 47.688916,   sudoeste 
+                   
+                  
+                ]
+                })
+                map.addLayer({
+                    id: 'radar1a',
+                    'type': 'raster',
+                    'source': 'radar1a',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+        });
+
+    }); 
+
+    map.on('load', () => {
+        map.addSource('radar2a', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site2a.png',
+                'coordinates': [
+
+                    [-1.9995, 47.698097], 
+                    [-1.9931, 47.698097],
+                    [-1.9931, 47.693506],
+                    [-1.9995, 47.693506]
+
+                    
+                   //-2.01225, 47.698097,   noroeste
+                   //-1.985984, 47.698097,  nordeste
+                   //-1.985984, 47.688916,  sudeste 
+                   //-2.01225, 47.688916,   sudoeste 
+                   
+                  
+                ]
+                })
+                map.addLayer({
+                    id: 'radar2a',
+                    'type': 'raster',
+                    'source': 'radar2a',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+        });
+     }); 
+
+     map.on('load', () => {
+        map.addSource('radar3a', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site3a.png',
+                'coordinates': [
+
+                    [-1.9931, 47.698097], 
+                    [-1.9867, 47.698097],
+                    [-1.9867, 47.693506],
+                    [-1.9931, 47.693506]
+
+                    
+                //-2.01225, 47.698097,   noroeste
+                //-1.985984, 47.698097,  nordeste
+                //-1.985984, 47.688916,  sudeste 
+                //-2.01225, 47.688916,   sudoeste 
+                
+                
+                ]
+                })
+                map.addLayer({
+                    id: 'radar3a',
+                    'type': 'raster',
+                    'source': 'radar3a',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+                });
+
+        /*
             map.addSource('radar', {
                 'type': 'image',
                 'url': '/lessonsperdus-assets/carte_site.jpg',
                 'coordinates': [
-                    /*
-                    [-45.20, -17.8], noroeste
-                    [-44.20, -17.8], nordeste
-                    [-44.20, -19.3], sudeste
-                    [-45.20, -19.3]  sudoeste  */
 
                     [-2.0123, 47.698097], 
                     [-1.9867, 47.698097],
                     [-1.9867, 47.688916],
                     [-2.0123, 47.688916]
 
-                    /*
-                   -2.01225, 47.698097,   noroeste
-                   -2.01225, 47.688916,   sudoeste
-                   -1.985984, 47.698097,  nordeste
-                   -1.985984, 47.688916,  sudeste  */
+                    
+                   //-2.01225, 47.698097,   noroeste
+                   //-1.985984, 47.698097,  nordeste
+                   //-1.985984, 47.688916,  sudeste 
+                   //-2.01225, 47.688916,   sudoeste 
+                   
                   
                 ]
                 })
@@ -228,14 +308,104 @@
                     'raster-fade-duration': 0
                 }
             });
-            
-            
-        }); 
-      
-    
+        */
 
-      // ZOOM
-     // map.addControl(new mapboxgl.NavigationControl(), 'top-left'); // disable map zoom when using scroll
+        }); 
+
+
+        map.on('load', () => {
+
+        map.addSource('radar1b', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site1b.png',
+                'coordinates': [
+
+                    [-2.0059, 47.693506], 
+                    [-1.9995, 47.693506],
+                    [-1.9995, 47.688916],
+                    [-2.0059, 47.688916]
+
+                    
+                //-2.01225, 47.698097,   noroeste
+                //-1.985984, 47.698097,  nordeste
+                //-1.985984, 47.688916,  sudeste 
+                //-2.01225, 47.688916,   sudoeste 
+                
+                
+                ]
+                })
+                map.addLayer({
+                    id: 'radar1b',
+                    'type': 'raster',
+                    'source': 'radar1b',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+        });
+
+        }); 
+
+        map.on('load', () => {
+        map.addSource('radar2b', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site2b.png',
+                'coordinates': [
+
+                    [-1.9995, 47.693506], 
+                    [-1.9931, 47.693506],
+                    [-1.9931, 47.688916],
+                    [-1.9995, 47.688916]
+
+                    
+                //-2.01225, 47.698097,   noroeste
+                //-1.985984, 47.698097,  nordeste
+                //-1.985984, 47.688916,  sudeste 
+                //-2.01225, 47.688916,   sudoeste 
+                
+                
+                ]
+                })
+                map.addLayer({
+                    id: 'radar2b',
+                    'type': 'raster',
+                    'source': 'radar2b',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+        });
+        }); 
+
+        map.on('load', () => {
+        map.addSource('radar3b', {
+                'type': 'image',
+                'url': '/lessonsperdus-assets/carte_site3b.png',
+                'coordinates': [
+
+                    [-1.9931, 47.693506], 
+                    [-1.9867, 47.693506],
+                    [-1.9867, 47.688916],
+                    [-1.9931, 47.688916]
+
+                    
+                //-2.01225, 47.698097,   noroeste
+                //-1.985984, 47.698097,  nordeste
+                //-1.985984, 47.688916,  sudeste 
+                //-2.01225, 47.688916,   sudoeste 
+                
+                
+                ]
+                })
+                map.addLayer({
+                    id: 'radar3b',
+                    'type': 'raster',
+                    'source': 'radar3b',
+                    'paint': {
+                    'raster-fade-duration': 0
+                }
+        });
+        }); 
+    // ZOOM
+    // map.addControl(new mapboxgl.NavigationControl(), 'top-left'); // disable map zoom when using scroll
     //  map.scrollZoom.disable(); 
       
     // Add geolocate control to the map.
@@ -263,29 +433,6 @@ function closeNav() {
 function myFunction() {
   var popup = document.getElementById("myPopup");
   popup.classList.toggle("show");
-}
-</script>
-
-<script>
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
-});
-</script>
-
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
 }
 </script>
 
